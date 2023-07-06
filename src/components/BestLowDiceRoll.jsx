@@ -1,25 +1,28 @@
 import { useState } from "react";
 
 function BestLowDiceRoll() {
-    const [rollDice, setRollDice] = useState(0);
-    const [bestDiceRoll, setBestDiceRoll] = useState(0);
+    const [currentDiceRoll, setCurrentDiceRoll] = useState(0);
+    const [gameEndDiceRoll, setGameEndDiceRoll] = useState(0)
+    const [gameBestDiceRoll, setGameBestDiceRoll] = useState(0);
+    const [gameStarted, setGameStarted] = useState(false);
+	const [gameEnded, setGameEnded] = useState(false);
 
     function resetDice() {
-        setRollDice(0);
+        setCurrentDiceRoll(0);
     }
     
     function rollDiceCounter() {
-        setRollDice(prev => prev + 1);
+        setCurrentDiceRoll(prev => prev + 1);
     }
 
     return (
       <>
       <section className="best-low-dice-roll">
         <div className="best-low-dice-roll-inner-border">
-          <div>Dice Rolls: {rollDice}</div>
+          <div>Dice Rolls: {currentDiceRoll}</div>
         </div>
         <div className="best-low-dice-roll-inner-border">
-          <div>Best Rolls: {bestDiceRoll}</div>
+          <div>Best Rolls: {gameBestDiceRoll}</div>
         </div>
       </section>
 
