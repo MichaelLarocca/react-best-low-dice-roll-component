@@ -25,7 +25,7 @@ function BestLowDiceRoll({ gameStarted, gameEnded, setGameStarted, setGameEnded 
 
     function updateBestDiceRoll() {
       if (gameEndDiceRoll < gameBestDiceRoll && gameEndDiceRoll !== 0) {
-        setGameEndDiceRoll(gameEndDiceRoll);
+        setGameBestDiceRoll(gameEndDiceRoll);
         saveBestDiceRoll(gameEndDiceRoll);
       }
     }
@@ -50,29 +50,17 @@ function BestLowDiceRoll({ gameStarted, gameEnded, setGameStarted, setGameEnded 
     }
 
     useEffect(() => {
+      const bestDiceRoll = getBestDiceRoll();
+      setGameBestDiceRoll(bestDiceRoll);
+    }, []);
+  
+    useEffect(() => {
       if (gameStarted) {
         resetDice();
+      } else if (gameEnded) {
+        updateBestDiceRoll();
       }
-    }, [gameStarted]);
-
-    useEffect(() => {
-      updateBestDiceRoll();
-    }, [gameEnded]);
-
-    useEffect(() => {
-    const bestDiceRoll = getBestDiceRoll();
-    setGameBestDiceRoll(bestDiceRoll);
-    }, []);
-
-    useEffect(() => {
-      if (gameEnded) {
-        const bestDiceRoll = getBestDiceRoll();
-        if (currentDiceRoll < bestDiceRoll) {
-          saveBestDiceRoll(currentDiceRoll);
-          setGameBestDiceRoll(currentDiceRoll);
-        }
-      }
-    }, [gameEnded]);
+    }, [gameStarted, gameEnded]);
 
     return (
       <>
