@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 
-function BestLowDiceRoll() {
+function BestLowDiceRoll({ gameStarted, gameEnded, setGameStarted, setGameEnded }) {
     const [currentDiceRoll, setCurrentDiceRoll] = useState(0);
     const [gameEndDiceRoll, setGameEndDiceRoll] = useState(0)
     const [gameBestDiceRoll, setGameBestDiceRoll] = useState(0);
-    const [gameStarted, setGameStarted] = useState(false);
-	  const [gameEnded, setGameEnded] = useState(false);
     const yourAwesomeGameName = "yourAwesomeGameName";
 
     function resetDice() {
@@ -25,7 +23,7 @@ function BestLowDiceRoll() {
       localStorage.setItem(`${yourAwesomeGameName}-BestDiceRoll`, bestDiceRoll);
     }
 
-    function bestDiceRol() {
+    function updateBestDiceRoll() {
       if (gameEndDiceRoll < gameBestDiceRoll && gameEndDiceRoll !== 0) {
         setGameEndDiceRoll(gameEndDiceRoll);
         saveBestDiceRoll(gameEndDiceRoll);
@@ -42,9 +40,8 @@ function BestLowDiceRoll() {
         setGameEnded(true);
         setGameStarted(false);
         setGameEndDiceRoll(currentDiceRoll);
-          console.log(`gameEndDiceRoll: ${gameEndDiceRoll}`);
-          console.log( `gameBestDiceRoll: ${gameBestDiceRoll}`);
         const bestDiceRoll = getBestDiceRoll();
+
         if (currentDiceRoll < bestDiceRoll) {
           saveBestDiceRoll(currentDiceRoll);
           setGameBestDiceRoll(currentDiceRoll);
@@ -59,23 +56,23 @@ function BestLowDiceRoll() {
     }, [gameStarted]);
 
     useEffect(() => {
-      bestDiceRol();
+      updateBestDiceRoll();
     }, [gameEnded]);
 
-      useEffect(() => {
+    useEffect(() => {
     const bestDiceRoll = getBestDiceRoll();
     setGameBestDiceRoll(bestDiceRoll);
-  }, []);
+    }, []);
 
-  useEffect(() => {
-    if (gameEnded) {
-      const bestDiceRoll = getBestDiceRoll();
-      if (currentDiceRoll < bestDiceRoll) {
-        saveBestDiceRoll(currentDiceRoll);
-        setGameBestDiceRoll(currentDiceRoll);
+    useEffect(() => {
+      if (gameEnded) {
+        const bestDiceRoll = getBestDiceRoll();
+        if (currentDiceRoll < bestDiceRoll) {
+          saveBestDiceRoll(currentDiceRoll);
+          setGameBestDiceRoll(currentDiceRoll);
+        }
       }
-    }
-  }, [gameEnded]);
+    }, [gameEnded]);
 
     return (
       <>
@@ -84,7 +81,6 @@ function BestLowDiceRoll() {
           <div>Dice Rolls: {currentDiceRoll}</div> 
         </div>
         <div className="best-low-dice-roll-inner-border">
-          {/* <div>Best Rolls: {gameBestDiceRoll}</div> */}
           <div>Best Rolls: {gameBestDiceRoll === Infinity ? '---' : gameBestDiceRoll}</div>
         </div>
       </section>
@@ -92,11 +88,9 @@ function BestLowDiceRoll() {
       <button onClick={startGame} disabled={gameStarted}>
         Start
       </button>
-      {/* <button onClick={rollDiceCounter} disabled={gameEnded}> */}
       <button onClick={rollDiceCounter} disabled={!gameStarted || gameEnded}>
         Roll Dice
       </button>
-      {/* <button onClick={endGame} disabled={gameEnded}> */}
       <button onClick={endGame} disabled={!gameStarted || gameEnded}>
         End
       </button>

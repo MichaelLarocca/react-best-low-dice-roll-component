@@ -3,11 +3,16 @@ import BestLowDiceRoll from '../src/components/BestLowDiceRoll';
 import './App.css'
 
 function App() {
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
 
   return (
-    <>
-      <BestLowDiceRoll />
-    </>
+      <BestLowDiceRoll 
+        gameStarted={gameStarted}
+        gameEnded={gameEnded}
+        setGameStarted={setGameStarted}
+        setGameEnded={setGameEnded}
+      />
   )
 }
 
