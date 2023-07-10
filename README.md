@@ -12,7 +12,7 @@ This React component tracks the best (lowest) number of dice rolls to complete a
 ### Installation
 1. Clone this repository
 ```
-git clone 
+git clone https://github.com/MichaelLarocca/react-best-low-dice-roll-component.git
 ```
 2. Change directory to the project folder
 ```   
@@ -34,8 +34,8 @@ This project is licensed under the MIT License
 
 #### Links
 
-- [Article]()
-- [Live Demo]()
+- [Article](https://selftaughttxg.com/2023/07-23/how-to-make-a-best-dice-roll-react-component/)
+- [Live Demo](https://react-best-low-dice-roll-component.netlify.app/)
 
 #### Author
 
